@@ -43,20 +43,20 @@ GoldenWind/
 
 ## Características del Avance 1
 
-- ✅ Página principal responsiva
-- ✅ 5 páginas estáticas informativas
-- ✅ Navegación completa
-- ✅ Sistema de estilos profesional
-- ✅ Diseño mobile-first
-- ✅ Formulario de cotización
+- Página principal responsiva
+- 5 páginas estáticas informativas
+- Navegación completa
+- Sistema de estilos profesional
+- Diseño mobile-first
+- Formulario de cotización
 
-## Comenzar
+# Comenzar
 
 1. Instalar dependencias: `composer install`
 2. Ejecutar el servidor: `php artisan serve`
 3. Acceder a: `http://localhost:8000`
 
-## Tecnologías
+# Tecnologías
 
 - Laravel 8.x
 - Blade Templating
@@ -64,7 +64,7 @@ GoldenWind/
 - JavaScript Vanilla
 - Font Awesome Icons
 
-## Próximos Avances
+# Próximos Avances
 
 - **Avance 2**: Autenticación y carrito de compras
 - **Avance 3**: Catálogo de productos
