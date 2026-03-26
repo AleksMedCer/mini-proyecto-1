@@ -7,13 +7,17 @@
  * 
  * Avance 1: Páginas estáticas básicas
  * Avance 2: Rutas públicas, login y registro
+ * Avance 3: Inicio de sesión real y dashboards por rol
  * 
  * Desarrollado por:
- * - Julio: Definición de rutas públicas y privadas
- * - Oscar: Vista de formularios
- * - Isacc: Navegación y flujo
+ * - Julio: Liderazgo del acceso, rutas protegidas y redirección por rol
+ * - Oscar: Dashboards de Cliente y Empleado
+ * - Isacc: Dashboard de Gerente y experiencia de logout
  */
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 // ============================================
@@ -47,55 +51,50 @@ Route::get('/contactanos', function () {
 })->name('contactanos');
 
 // ============================================
-// 2. RUTAS DE AUTENTICACIÓN (Avance 2)
+// 2. RUTAS DE AUTENTICACIÓN (Avance 3)
 // ============================================
 
-// Rutas de Login - Formulario y procesamiento
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login')->middleware('guest');
+Route::middleware('guest')->group(function () {
+    // Rutas de Login - Julio implementa la verificación real
+    Route::get('/login', [LoginController::class, 'create'])->name('login');
+    Route::post('/login', [LoginController::class, 'store']);
 
-Route::post('/login', function () {
-    // Procesamiento de login (se implementará en Avance 3)
-    return redirect('/dashboard');
-})->middleware('guest');
-
-// Rutas de Registro - Formulario y procesamiento
-Route::get('/register', function () {
-    return view('auth.register');
-})->name('register')->middleware('guest');
-
-Route::post('/register', function () {
-    // Procesamiento de registro (se implementará en Avance 3)
-    return redirect('/login');
-})->middleware('guest');
+    // Rutas de Registro - cliente por defecto
+    Route::get('/register', [RegisterController::class, 'create'])->name('register');
+    Route::post('/register', [RegisterController::class, 'store']);
+});
 
 // ============================================
-// 3. RUTAS PRIVADAS (Requieren autenticación)
+// 3. RUTAS PRIVADAS (Requieren autenticación y rol)
 // ============================================
 
 Route::middleware('auth')->group(function () {
-    
-    // Dashboard del usuario
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-    
+    // Dashboard central: Julio decide la redirección según rol
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Dashboards especializados por rol
+    Route::get('/dashboard/cliente', [DashboardController::class, 'cliente'])
+        ->name('dashboard.cliente')
+        ->middleware('role:cliente');
+
+    Route::get('/dashboard/empleado', [DashboardController::class, 'empleado'])
+        ->name('dashboard.empleado')
+        ->middleware('role:empleado');
+
+    Route::get('/dashboard/gerente', [DashboardController::class, 'gerente'])
+        ->name('dashboard.gerente')
+        ->middleware('role:gerente');
+
     // Perfil del usuario
-    Route::get('/perfil', function () {
-        return view('user.profile');
-    })->name('user.profile');
-    
+    Route::get('/perfil', [DashboardController::class, 'profile'])->name('user.profile');
+
     // Mis órdenes / Carrito
-    Route::get('/mis-ordenes', function () {
-        return view('user.orders');
-    })->name('user.orders');
-    
+    Route::get('/mis-ordenes', [DashboardController::class, 'orders'])
+        ->name('user.orders')
+        ->middleware('role:cliente');
+
     // Logout
-    Route::post('/logout', function () {
-        // Logout (se implementará en Avance 3)
-        return redirect('/');
-    })->name('logout');
+    Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 });
 
 // ============================================
@@ -104,7 +103,7 @@ Route::middleware('auth')->group(function () {
 
 // Redireccionar usuario autenticado que intenta ir a home
 Route::get('/home', function () {
-    return redirect('/dashboard');
+    return redirect()->route('dashboard');
 });
 
 // ============================================
@@ -114,15 +113,17 @@ Route::get('/home', function () {
  * Middlewares utilizados:
  * - 'guest': Solo usuarios NO autenticados
  * - 'auth': Solo usuarios autenticados
+ * - 'role': Restringe dashboards por rol
  * 
- * Próximos avances:
- * - Avance 3: Implementar lógica de autenticación con controladores
- * - Avance 4: Agregar rutas de productos y carrito
- * - Avance 5: Rutas de administración
+ * Roles implementados:
+ * - cliente
+ * - empleado
+ * - gerente
  * 
- * Cambios realizados en Avance 2:
- * 1. Agregadas rutas de login y registro
- * 2. Creadas rutas protegidas con middleware
- * 3. Añadidas redirecciones básicas
- * 4. Documentación completa de la estructura
+ * Cambios realizados en Avance 3:
+ * 1. Login con verificación real de credenciales
+ * 2. Registro con asignación automática de rol Cliente
+ * 3. Redirección automática a dashboard según rol
+ * 4. Logout seguro con invalidación de sesión
+ * 5. Dashboards separados para Cliente, Empleado y Gerente
  */
