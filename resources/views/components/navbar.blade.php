@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!-- 
     ================================================
     NAVBAR DE GOLDENWIND - Avance 2
@@ -14,6 +15,10 @@
 <nav class="navbar">
     @php($currentUser = Auth::user())
 
+=======
+//isaac estuvo aqui :D
+<nav class="navbar">
+>>>>>>> 9081a6869d5f4ca91ef0e6751ccb5ac0de9b6875
     <div class="navbar-container">
         <!-- Logo -->
         <div class="navbar-logo">
@@ -32,13 +37,17 @@
 
         <!-- Navigation Menu -->
         <ul class="navbar-menu" id="navbarMenu">
+<<<<<<< HEAD
             <!-- Menú público (siempre visible) -->
+=======
+>>>>>>> 9081a6869d5f4ca91ef0e6751ccb5ac0de9b6875
             <li><a href="{{ route('welcome') }}">Inicio</a></li>
             <li><a href="{{ route('quienes-somos') }}">Quiénes Somos</a></li>
             <li><a href="{{ route('mision') }}">Misión</a></li>
             <li><a href="{{ route('vision') }}">Visión</a></li>
             <li><a href="{{ route('ubicacion') }}">Ubicación</a></li>
             <li><a href="{{ route('contactanos') }}">Contáctanos</a></li>
+<<<<<<< HEAD
             
             <!-- Separador -->
             <li class="navbar-separator"></li>
@@ -339,3 +348,8 @@
         });
     });
 </script>
+=======
+        </ul>
+    </div>
+</nav>
+>>>>>>> 9081a6869d5f4ca91ef0e6751ccb5ac0de9b6875
