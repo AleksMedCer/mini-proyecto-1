@@ -3,9 +3,35 @@
 @section('title', 'GoldenWind - Tienda de Climatización y Seguridad')
 
 @section('content')
+@php
+    $featuredProducts = [
+        [
+            'title' => 'Ventiladores',
+            'description' => 'Ventiladores de piso, turbo y de techo. Modelos eficientes y silenciosos.',
+            'icon' => 'fas fa-fan',
+            'image' => 'images/products/ventiladores.jpg',
+            'alt' => 'Ventiladores GoldenWind',
+        ],
+        [
+            'title' => 'Aires Acondicionados',
+            'description' => 'Equipos split y portátiles con tecnología inverter de bajo consumo.',
+            'icon' => 'fas fa-snowflake',
+            'image' => 'images/products/aires-acondicionados.jpg',
+            'alt' => 'Aires acondicionados GoldenWind',
+        ],
+        [
+            'title' => 'Paracaídas',
+            'description' => 'Equipos de seguridad de alta performance para deportes extremos.',
+            'icon' => 'fas fa-parachute-box',
+            'image' => 'images/products/paracaidas.jpg',
+            'alt' => 'Paracaidas GoldenWind',
+        ],
+    ];
+@endphp
+
 <div class="hero">
     <div class="hero-content">
-        <h1 class="hero-title">Bienvenido a GoldenWind</h1>
+        <h1 class="hero-title">Bienvenido a <span class="brand-gold">GoldenWind</span></h1>
         <p class="hero-subtitle">Tu Tienda de Soluciones de Climatización y Seguridad</p>
         <div class="hero-buttons">
             <a href="{{ route('quienes-somos') }}" class="btn btn-primary">Conoce Nuestros Productos</a>
@@ -45,28 +71,26 @@
 <section class="products-preview">
     <div class="container">
         <h2>Nuestros Productos Destacados</h2>
+        <p class="products-subtitle">Agrega tus fotos en <strong>public/images/products</strong> y aparecerán aquí automáticamente.</p>
         <div class="products-grid">
-            <div class="product-card">
-                <div class="product-icon">
-                    <i class="fas fa-fan"></i>
+            @foreach ($featuredProducts as $product)
+                <div class="product-card">
+                    <div class="product-media">
+                        @if (file_exists(public_path($product['image'])))
+                            <img src="{{ asset($product['image']) }}" alt="{{ $product['alt'] }}">
+                        @else
+                            <div class="product-placeholder" aria-hidden="true">
+                                <i class="{{ $product['icon'] }}"></i>
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="product-copy">
+                        <h3>{{ $product['title'] }}</h3>
+                        <p>{{ $product['description'] }}</p>
+                    </div>
                 </div>
-                <h3>Ventiladores</h3>
-                <p>Ventiladores de piso, turbo y de techo. Modelos eficientes y silenciosos.</p>
-            </div>
-            <div class="product-card">
-                <div class="product-icon">
-                    <i class="fas fa-snowflake"></i>
-                </div>
-                <h3>Aires Acondicionados</h3>
-                <p>Equipos split y portátiles con tecnología inverter de bajo consumo.</p>
-            </div>
-            <div class="product-card">
-                <div class="product-icon">
-                    <i class="fas fa-parachute-box"></i>
-                </div>
-                <h3>Paracaídas</h3>
-                <p>Equipos de seguridad de alta performance para deportes extremos.</p>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>

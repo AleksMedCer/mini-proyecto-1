@@ -1,9 +1,35 @@
 <?php $__env->startSection('title', 'GoldenWind - Tienda de Climatización y Seguridad'); ?>
 
 <?php $__env->startSection('content'); ?>
+<?php
+    $featuredProducts = [
+        [
+            'title' => 'Ventiladores',
+            'description' => 'Ventiladores de piso, turbo y de techo. Modelos eficientes y silenciosos.',
+            'icon' => 'fas fa-fan',
+            'image' => 'images/products/ventiladores.jpg',
+            'alt' => 'Ventiladores GoldenWind',
+        ],
+        [
+            'title' => 'Aires Acondicionados',
+            'description' => 'Equipos split y portátiles con tecnología inverter de bajo consumo.',
+            'icon' => 'fas fa-snowflake',
+            'image' => 'images/products/aires-acondicionados.jpg',
+            'alt' => 'Aires acondicionados GoldenWind',
+        ],
+        [
+            'title' => 'Paracaídas',
+            'description' => 'Equipos de seguridad de alta performance para deportes extremos.',
+            'icon' => 'fas fa-parachute-box',
+            'image' => 'images/products/paracaidas.jpg',
+            'alt' => 'Paracaidas GoldenWind',
+        ],
+    ];
+?>
+
 <div class="hero">
     <div class="hero-content">
-        <h1 class="hero-title">Bienvenido a GoldenWind</h1>
+        <h1 class="hero-title">Bienvenido a <span class="brand-gold">GoldenWind</span></h1>
         <p class="hero-subtitle">Tu Tienda de Soluciones de Climatización y Seguridad</p>
         <div class="hero-buttons">
             <a href="<?php echo e(route('quienes-somos')); ?>" class="btn btn-primary">Conoce Nuestros Productos</a>
@@ -43,28 +69,26 @@
 <section class="products-preview">
     <div class="container">
         <h2>Nuestros Productos Destacados</h2>
+        <p class="products-subtitle">Agrega tus fotos en <strong>public/images/products</strong> y aparecerán aquí automáticamente.</p>
         <div class="products-grid">
-            <div class="product-card">
-                <div class="product-icon">
-                    <i class="fas fa-fan"></i>
+            <?php $__currentLoopData = $featuredProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="product-card">
+                    <div class="product-media">
+                        <?php if(file_exists(public_path($product['image']))): ?>
+                            <img src="<?php echo e(asset($product['image'])); ?>" alt="<?php echo e($product['alt']); ?>">
+                        <?php else: ?>
+                            <div class="product-placeholder" aria-hidden="true">
+                                <i class="<?php echo e($product['icon']); ?>"></i>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="product-copy">
+                        <h3><?php echo e($product['title']); ?></h3>
+                        <p><?php echo e($product['description']); ?></p>
+                    </div>
                 </div>
-                <h3>Ventiladores</h3>
-                <p>Ventiladores de piso, turbo y de techo. Modelos eficientes y silenciosos.</p>
-            </div>
-            <div class="product-card">
-                <div class="product-icon">
-                    <i class="fas fa-snowflake"></i>
-                </div>
-                <h3>Aires Acondicionados</h3>
-                <p>Equipos split y portátiles con tecnología inverter de bajo consumo.</p>
-            </div>
-            <div class="product-card">
-                <div class="product-icon">
-                    <i class="fas fa-parachute-box"></i>
-                </div>
-                <h3>Paracaídas</h3>
-                <p>Equipos de seguridad de alta performance para deportes extremos.</p>
-            </div>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
 </section>

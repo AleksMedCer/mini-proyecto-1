@@ -18,8 +18,8 @@
         <!-- Logo -->
         <div class="navbar-logo">
             <a href="{{ route('welcome') }}" class="logo-link">
-                <i class="fas fa-wind"></i>
-                <span>GoldenWind</span>
+                <i class="fas fa-wind logo-icon-gold"></i>
+                <span class="brand-gold brand-gold-nav">GoldenWind</span>
             </a>
         </div>
 
