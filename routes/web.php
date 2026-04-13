@@ -20,7 +20,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ProductoController;
 // ============================================
 // 1. RUTAS PÚBLICAS - Accesibles para todos
 // ============================================
@@ -120,6 +120,7 @@ Route::get('/home', function () {
     return redirect()->route('dashboard');
 });
 
+Route::resource('productos', ProductoController::class);
 // ============================================
 // NOTAS IMPORTANTES
 // ============================================
