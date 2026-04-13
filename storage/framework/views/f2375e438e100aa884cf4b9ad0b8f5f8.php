@@ -12,12 +12,12 @@
 -->
 
 <nav class="navbar">
-    @php($currentUser = Auth::user())
+    <?php ($currentUser = Auth::user()); ?>
 
     <div class="navbar-container">
         <!-- Logo -->
         <div class="navbar-logo">
-            <a href="{{ route('welcome') }}" class="logo-link">
+            <a href="<?php echo e(route('welcome')); ?>" class="logo-link">
                 <i class="fas fa-wind logo-icon-gold"></i>
                 <span class="brand-gold brand-gold-nav">GoldenWind</span>
             </a>
@@ -33,25 +33,25 @@
         <!-- Navigation Menu -->
         <ul class="navbar-menu" id="navbarMenu">
             <!-- Menú público (siempre visible) -->
-            <li><a href="{{ route('welcome') }}">Inicio</a></li>
-            <li><a href="{{ route('quienes-somos') }}">Quiénes Somos</a></li>
-            <li><a href="{{ route('mision') }}">Misión</a></li>
-            <li><a href="{{ route('vision') }}">Visión</a></li>
-            <li><a href="{{ route('ubicacion') }}">Ubicación</a></li>
-            <li><a href="{{ route('contactanos') }}">Contáctanos</a></li>
+            <li><a href="<?php echo e(route('welcome')); ?>">Inicio</a></li>
+            <li><a href="<?php echo e(route('quienes-somos')); ?>">Quiénes Somos</a></li>
+            <li><a href="<?php echo e(route('mision')); ?>">Misión</a></li>
+            <li><a href="<?php echo e(route('vision')); ?>">Visión</a></li>
+            <li><a href="<?php echo e(route('ubicacion')); ?>">Ubicación</a></li>
+            <li><a href="<?php echo e(route('contactanos')); ?>">Contáctanos</a></li>
             
             <!-- Separador -->
             <li class="navbar-separator"></li>
             
             <!-- Menú de autenticación - Condicional basado en estado (Avance 3) -->
-            @if ($currentUser)
+            <?php if($currentUser): ?>
                 <!-- Usuario autenticado -->
                 <li class="navbar-user-menu">
                     <div class="user-profile">
                         <i class="fas fa-user-circle"></i>
                         <div class="user-profile-copy">
-                            <span class="user-name">{{ $currentUser->name ?? 'Usuario' }}</span>
-                            <span class="user-role-badge">{{ $currentUser->role_label ?? ucfirst($currentUser->role ?? 'cliente') }}</span>
+                            <span class="user-name"><?php echo e($currentUser->name ?? 'Usuario'); ?></span>
+                            <span class="user-role-badge"><?php echo e($currentUser->role_label ?? ucfirst($currentUser->role ?? 'cliente')); ?></span>
                         </div>
                         <i class="fas fa-chevron-down"></i>
                     </div>
@@ -59,33 +59,34 @@
                     <!-- Submenu desplegable -->
                     <ul class="submenu">
                         <li>
-                            <a href="{{ route('user.profile') }}" class="submenu-link">
+                            <a href="<?php echo e(route('user.profile')); ?>" class="submenu-link">
                                 <i class="fas fa-cog"></i> Mi Perfil
                             </a>
                         </li>
-                        @if (($currentUser->role ?? null) === \App\Models\User::ROLE_CLIENTE)
+                        <?php if(($currentUser->role ?? null) === \App\Models\User::ROLE_CLIENTE): ?>
                             <li>
-                                <a href="{{ route('user.orders') }}" class="submenu-link">
+                                <a href="<?php echo e(route('user.orders')); ?>" class="submenu-link">
                                     <i class="fas fa-shopping-bag"></i> Mis Órdenes
                                 </a>
                             </li>
-                        @endif
+                        <?php endif; ?>
                         <li>
-                            <a href="{{ route('dashboard') }}" class="submenu-link submenu-link-primary">
-                                <i class="fas fa-chart-line"></i> Dashboard de {{ $currentUser->role_label ?? 'Usuario' }}
+                            <a href="<?php echo e(route('dashboard')); ?>" class="submenu-link submenu-link-primary">
+                                <i class="fas fa-chart-line"></i> Dashboard de <?php echo e($currentUser->role_label ?? 'Usuario'); ?>
+
                             </a>
                         </li>
-                        @if ($currentUser->isGerente())
+                        <?php if($currentUser->isGerente()): ?>
                             <li>
-                                <a href="{{ route('management.users.index') }}" class="submenu-link">
+                                <a href="<?php echo e(route('management.users.index')); ?>" class="submenu-link">
                                     <i class="fas fa-users-cog"></i> Administrar Usuarios
                                 </a>
                             </li>
-                        @endif
+                        <?php endif; ?>
                         <li class="submenu-divider"></li>
                         <li>
-                            <form method="POST" action="{{ route('logout') }}" class="logout-form">
-                                @csrf
+                            <form method="POST" action="<?php echo e(route('logout')); ?>" class="logout-form">
+                                <?php echo csrf_field(); ?>
                                 <button type="submit" class="submenu-link logout-btn logout-btn-prominent">
                                     <i class="fas fa-sign-out-alt"></i> Cerrar Sesión Segura
                                 </button>
@@ -93,15 +94,15 @@
                         </li>
                     </ul>
                 </li>
-            @else
+            <?php else: ?>
                 <!-- Usuario no autenticado -->
-                <li><a href="{{ route('login') }}" class="nav-auth-link nav-login">
+                <li><a href="<?php echo e(route('login')); ?>" class="nav-auth-link nav-login">
                     <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
                 </a></li>
-                <li><a href="{{ route('register') }}" class="nav-auth-link nav-register">
+                <li><a href="<?php echo e(route('register')); ?>" class="nav-auth-link nav-register">
                     <i class="fas fa-user-plus"></i> Registrarse
                 </a></li>
-            @endif
+            <?php endif; ?>
         </ul>
     </div>
 </nav>
@@ -346,3 +347,4 @@
         });
     });
 </script>
+<?php /**PATH /Users/aleksmedcer/Documents/Mini Proyecto 1/resources/views/components/navbar.blade.php ENDPATH**/ ?>
