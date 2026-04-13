@@ -69,3 +69,8 @@
     <script src="{{ asset('js/script.js') }}"></script>
 </body>
 </html>
+@if(session('success'))
+    <div style="color: green;">
+        {{ session('success') }}
+    </div>
+@endif
