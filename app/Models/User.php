@@ -89,4 +89,26 @@ class User extends Authenticatable
                 return 'Cliente';
         }
     }
+
+    // 🔗 RELACIONES (TODO DEBE IR AQUÍ DENTRO)
+
+    public function productos()
+    {
+        return $this->hasMany(Producto::class);
+    }
+
+    public function ventasCliente()
+    {
+        return $this->hasMany(Venta::class, 'cliente_id');
+    }
+
+    public function ventasVendedor()
+    {
+        return $this->hasMany(Venta::class, 'vendedor_id');
+    }
+
+    public function categorias()
+    {
+        return $this->productos->flatMap->categorias;
+    }
 }
